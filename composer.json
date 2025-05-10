@@ -1,0 +1,11 @@
+{
+    "name": "devagus/admin-customisimple",
+    "description": "A plugin to do simple customization of WordPress admin interface.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "AdminCustomisimple\\": "src/"
+        }
+    }
+}
