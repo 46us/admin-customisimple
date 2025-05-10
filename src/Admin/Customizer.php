@@ -50,13 +50,13 @@ class Customizer
 
     public function modify_footer($text)
     {
-        if (!isset($this->ac_options['footer_text']) || trim($this->ac_options['footer_text']) != '') {
+        if (!isset($this->ac_options['footer_text']) || trim($this->ac_options['footer_text']) === '') {
             return $text; // Do not modify the footer text if the option is not set
         }
 
         $text = wp_kses_post($this->ac_options['footer_text']); // Sanitize the custom footer text
 
-        return $text;
+        return $text; // Return the custom footer text
     }
 
     public function remove_wordpress_version_text($text)
