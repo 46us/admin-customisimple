@@ -49,16 +49,16 @@ class SettingsFieldBuilder
 
     public function render_input_field($args)
     {
-        $value = get_option('ac_options');
+        $value = get_option('ac_options', []);
     
         $input = '<input type="' . esc_attr($args['type']) . '" id="' . esc_attr($args['id']) . '" name="ac_options[' . esc_attr($args['id']) . ']" ';
 
         // Filter whether to add "value" attribute or "checked" attribute, based on field type
         if ($args['type'] === 'checkbox') {
-            $checkbox_value = isset($value[$args['id']]) ?? 0;
+            $checkbox_value = $value[$args['id']] ?? 0;
             $input .= 'value="1" ' . checked($checkbox_value, 1, false);
         } else {
-            $text_value = isset($value[$args['id']]) ?? '';
+            $text_value = $value[$args['id']] ?? '';
             $input .= 'value="' . esc_attr($text_value) . '"';
         }
 
@@ -74,8 +74,10 @@ class SettingsFieldBuilder
 
     public function render_textarea_field($args)
     {
-        $value = get_option('ac_options')[$args['id']];
-        $input = '<textarea id="' . esc_attr($args['id']) . '" name="ac_options[' . esc_attr($args['id']) . ']" rows="5" cols="50">' . esc_textarea($value) . '</textarea>';
+        $options = get_option('ac_options', []);
+        $value   = $options[$args['id']] ?? '';
+        // Render textarea field
+        $input   = '<textarea id="' . esc_attr($args['id']) . '" name="ac_options[' . esc_attr($args['id']) . ']" rows="5" cols="50">' . esc_textarea($value) . '</textarea>';
         // Render description if provided
         if (isset($args['description']) && $args['description'] !== '') {
             $input .= '<p class="description">' . esc_html($args['description']) . '</p>';

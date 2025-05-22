@@ -19,6 +19,7 @@ class Customizer
         add_action('admin_bar_menu', [$this, 'remove_wp_admin_bar_menu'], 999);
         add_filter('admin_footer_text', [$this, 'modify_footer'], 10);
         add_filter('update_footer', [$this, 'remove_wordpress_version_text'], 20);
+        add_filter('upload_mimes', [$this, 'allow_svg_file_upload'], 10);
     }
 
     public function collapse_menu()
@@ -64,5 +65,17 @@ class Customizer
         $noneed_to_remove = !isset($this->ac_options['remove_wp_version_text']) || $this->ac_options['remove_wp_version_text'] != 1;
 
         return $noneed_to_remove ? $text : ''; // Remove the WordPress version text if the option is set
+    }
+
+    public function allow_svg_file_upload($mimes)
+    {
+        if (!isset($this->ac_options['allow_svg_upload']) || $this->ac_options['allow_svg_upload'] != 1) {
+            return $mimes; // Do not allow SVG upload if the option is not set
+        }
+
+        // Allow SVG file upload
+        $mimes['svg'] = 'image/svg+xml';
+
+        return $mimes;
     }
 }

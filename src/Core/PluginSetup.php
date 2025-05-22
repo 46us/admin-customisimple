@@ -88,6 +88,14 @@ class PluginSetup
             'Modify Footer Text',
             'Enter your own text to replace the "Thank you for creating with WordPress" text in the admin footer. You can use HTML tags here.'
         );
+
+        // Add setting field to allow SVG file upload
+        $this->settings_field_builder->create_field(
+            'checkbox',
+            'allow_svg_upload',
+            'Allow SVG File Upload',
+            'Turn this setting ON to allow SVG file uploads in the media library.'
+        );
     }
 
     public function render_settings_section()
